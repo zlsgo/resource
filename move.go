@@ -12,9 +12,7 @@ import (
 func (r *Resource) MoveFile() error {
 	d := zfile.RealPathMkdir(r.Dir, true)
 	return filepath.Walk(r.tmpPath, func(path string, info os.FileInfo, err error) error {
-		if info.IsDir() {
-			path = zfile.RealPath(path, true)
-		}
+		path = zfile.RealPath(path, info.IsDir())
 		newPath := strings.Replace(path, r.tmpPath, d, 1)
 		shortPath := strings.Replace(path, r.tmpPath, "/", 1)
 		if len(r.ignore) > 0 {
